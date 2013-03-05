@@ -22,33 +22,30 @@ Background: movies have been added to RottenPotatoes
   And  I am on the RottenPotatoes home page
   
 Scenario: restrict to movies with 'PG' or 'R' ratings
-        Given I am on the RottenPotatoes home page
-        When I check the following ratings: PG, R
-                And I press "Refresh"
-        Then the "ratings[PG]" checkbox should be checked
-                And the "ratings[R]" checkbox should be checked
-                And the "ratings[G]" checkbox should not be checked
-                And the "ratings[PG-13]" checkbox should not be checked
-                And the "ratings[NC-17]" checkbox should not be checked
-                And I should not see "Aladdin"
-                And I should see "The Terminator"
-                And I should see "When Harry Met Sally"
-                And I should not see "The Help"
-                And I should not see "Chocolat"
-                And I should see "Amelie"
-                And I should not see "2001: A Space Odyssey"
-                And I should see "The Incredibles"
-                And I should see "Raiders of the Lost Ark"
-                And I should not see "Chicken Run"
-   
-  # enter step(s) to check the 'PG' and 'R' checkboxesHEN
+  # enter step(s) to check the 'PG' and 'R' checkboxes
+  # When I check "ratings[PG]"
+  # And I check "ratings[R]"
+  Given I check the following ratings: PG, R
   # enter step(s) to uncheck all other checkboxes
+  When I uncheck "ratings[G]"
+  And I uncheck "ratings[PG-13]"
+  And I uncheck "ratings[NC-17]"
   # enter step to "submit" the search form on the homepage
+  When I press "Refresh"
+  # Then show me the page
   # enter step(s) to ensure that PG and R movies are visible
+  Then I should see "The Incredibles"
+  And I should see "Amelie"
   # enter step(s) to ensure that other movies are not visible
-
+  Then I should not see "Aladdin"
+  And I should not see "Chocolat"
+   
 Scenario: no ratings selected
-  # see assignment
+  When I uncheck the following ratings: G, PG, PG-13, NC-17, R
+  And I press "Refresh"
+  Then I should not see any movie
 
-#Scenario: all ratings selected
-  # see assignment
+Scenario: all ratings selected
+  When I check the following ratings: G, PG, PG-13, NC-17, R
+  And I press "Refresh"
+  Then I should see all movies
