@@ -25,7 +25,7 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
    When I check the following ratings: PG, R
    When I uncheck the following ratings: PG-13, NC-17, G
    And I press "ratings_submit"
-   Then I should be on the home page
+   Then I should be on the RottenPotatoes home page
    And I should see "Amelie"
    And I should see "Raiders of the Lost Ark"
    And I should see "The Incredibles"
@@ -46,13 +46,13 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
 Scenario: all checkboxes selected
    When I check the following ratings: PG, R, PG-13, NC-17, G
    And I press "ratings_submit"
-   Then I should be on the home page
+   Then I should be on the RottenPotatoes home page
    And I should see all of the movies
 
 Scenario: no checkboxes selected
    When I uncheck the following ratings: PG, R, PG-13, NC-17, G
    And I press "ratings_submit"
-   Then I should be on the home page
+   Then I should be on the RottenPotatoes home page
    And I should not see any of the movies
 
 
