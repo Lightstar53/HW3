@@ -51,36 +51,37 @@ end
 
 Given /the following movies have been added to RottenPotatoes:/ do |movies_table|
   movies_table.hashes.each do |movie|
-    Movie.create!(movie)
     # Each returned movie will be a hash representing one row of the movies_table
     # The keys will be the table headers and the values will be the row contents.
     # You should arrange to add that movie to the database here.
     # You can add the entries directly to the databasse with ActiveRecord methodsQ
+    if !Movie.find_by_title_and_rating(movie[:title], movie[:rating]) then
+      Movie.create!(movie)
   end
-  #flunk "Unimplemented"
+ end
+  assert (Movie.count >= movies_table.hashes.count), "Error while DB filling"
 end
 
 When /^I have opted to see movies rated: "(.*?)"$/ do |arg1|
   # HINT: use String#split to split up the rating_list, then
   # iterate over the ratings and check/uncheck the ratings
   # using the appropriate Capybara command(s)
-  rating_list.split(%r{\s*,\s*}).each_with_index {
-      |name, index|
-        if(!index) #first element
-          When %Q{I #{uncheck}check "ratings[#{name}]"}
-        else
-          And %Q{I #{uncheck}check "ratings[#{name}]"}
-        end
-    }
+  rating_list.split(/,( *)/).select{|i| i =~ /\w/}.each do |rating|
+    if uncheck then
+      step %{I uncheck "ratings[#{rating}]"}
+    else
+      step %{I check "ratings[#{rating}]"}
+    end
+  end
 end
 
 
 Then /^I should see only movies rated "(.*?)"$/ do |arg1|
-  flunk "Unimplemented" 
+  assert page.should have_selector("table tr", :count => Movie.count + 1), "Not all movies have seen"
 end
 
 Then /^I should see all of the movies$/ do
-  flunk "Unimplemented"
+  assert page.should have_selector("table tr", :count => 1), "I still see movies"
 end
 
 
