@@ -51,20 +51,29 @@ end
 
 Given /the following movies have been added to RottenPotatoes:/ do |movies_table|
   movies_table.hashes.each do |movie|
+    Movie.create!(movie)
     # Each returned movie will be a hash representing one row of the movies_table
     # The keys will be the table headers and the values will be the row contents.
     # You should arrange to add that movie to the database here.
     # You can add the entries directly to the databasse with ActiveRecord methodsQ
   end
-  flunk "Unimplemented"
+  #flunk "Unimplemented"
 end
 
 When /^I have opted to see movies rated: "(.*?)"$/ do |arg1|
   # HINT: use String#split to split up the rating_list, then
   # iterate over the ratings and check/uncheck the ratings
   # using the appropriate Capybara command(s)
-  flunk "Unimplemented"
+  rating_list.split(%r{\s*,\s*}).each_with_index {
+      |name, index|
+        if(!index) #first element
+          When %Q{I #{uncheck}check "ratings[#{name}]"}
+        else
+          And %Q{I #{uncheck}check "ratings[#{name}]"}
+        end
+    }
 end
+
 
 Then /^I should see only movies rated "(.*?)"$/ do |arg1|
   flunk "Unimplemented" 
