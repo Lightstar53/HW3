@@ -40,7 +40,15 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
                 And I should see "The Incredibles"
                 And I should see "Raiders of the Lost Ark"
                 And I should not see "Chicken Run"
+   
+  # enter step(s) to check the 'PG' and 'R' checkboxesHEN
+  # enter step(s) to uncheck all other checkboxes
+  # enter step to "submit" the search form on the homepage
+  # enter step(s) to ensure that PG and R movies are visible
+  # enter step(s) to ensure that other movies are not visible
 
-Scenario: all ratings selected
-  When I have opted to see movies rated: "G, PG, PG-13, R"
-  Then I should see all of the movies 
+Scenario: no ratings selected
+  # see assignment
+
+#Scenario: all ratings selected
+  # see assignment
