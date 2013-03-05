@@ -22,8 +22,24 @@ Background: movies have been added to RottenPotatoes
   And  I am on the RottenPotatoes home page
   
 Scenario: restrict to movies with 'PG' or 'R' ratings
-  When I have opted to see movies rated: "PG, R"
-  Then I should see only movies rated "PG, R"
+        Given I am on the RottenPotatoes home page
+        When I check the following ratings: PG, R
+                And I press "Refresh"
+        Then the "ratings[PG]" checkbox should be checked
+                And the "ratings[R]" checkbox should be checked
+                And the "ratings[G]" checkbox should not be checked
+                And the "ratings[PG-13]" checkbox should not be checked
+                And the "ratings[NC-17]" checkbox should not be checked
+                And I should not see "Aladdin"
+                And I should see "The Terminator"
+                And I should see "When Harry Met Sally"
+                And I should not see "The Help"
+                And I should not see "Chocolat"
+                And I should see "Amelie"
+                And I should not see "2001: A Space Odyssey"
+                And I should see "The Incredibles"
+                And I should see "Raiders of the Lost Ark"
+                And I should not see "Chicken Run"
 
 Scenario: all ratings selected
   When I have opted to see movies rated: "G, PG, PG-13, R"
