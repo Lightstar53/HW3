@@ -66,7 +66,7 @@ When /^I have opted to see movies rated: "(.*?)"$/ do |arg1|
   # HINT: use String#split to split up the rating_list, then
   # iterate over the ratings and check/uncheck the ratings
   # using the appropriate Capybara command(s)
-  rating_list.split("/,( *)/").select{|i| i =~ /\w/}.each do |rating|
+  rating_list.split(/,( *)/).select{|i| i =~ /\w/}.each do |rating|
     if uncheck then
       step %{I uncheck "ratings[#{rating}]"}
     else
