@@ -22,11 +22,7 @@ Background: movies have been added to database
   And I am on the RottenPotatoes home page
 
 Scenario: sort movies alphabetically
-  When I check the following ratings: PG, R, PG-13, NC-17, G
-  And I press "ratings_submit"
-  Then I should be on the RottenPotatoes home page
-  And I should see all of the movies
-  When I follow "Movie Title"
+  When I click "Movie Title"
   Then I should be on the RottenPotatoes home page
   And I should see "2001: A Space Odyssey" before "Aladdin"
   And I should see "Aladdin" before "Amelie"
@@ -40,7 +36,7 @@ Scenario: sort movies alphabetically
 
 Scenario: sort movies in increasing order of release date
   When I check the following ratings: PG, R, PG-13, NC-17, G
-  And I press "ratings_submit"
+  And I press "Refresh"
   Then I should be on the RottenPotatoes home page
   And I should see all of the movies
   When I follow "Release Date"
