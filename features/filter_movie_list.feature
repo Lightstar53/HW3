@@ -24,7 +24,7 @@ Background: movies have been added to RottenPotatoes
 Scenario: restrict to movies with 'PG' or 'R' ratings
    When I check the following ratings: PG, R
    When I uncheck the following ratings: PG-13, NC-17, G
-   And I press "ratings_submit"
+   And I press "Refresh"
    Then I should be on the RottenPotatoes home page
    #And I should see "Amelie"
    #And I should see "Raiders of the Lost Ark"
@@ -45,7 +45,7 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
 
 Scenario: all ratings selected
    When I check the following ratings: PG, R, PG-13, NC-17, G
-   And I press "ratings_submit"
+   And I press "Refresh"
    Then I should be on the RottenPotatoes home page
    And I should see all of the movies
 
