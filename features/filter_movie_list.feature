@@ -43,17 +43,13 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
    # enter step(s) to ensure that other movies are not visible
    
 
-Scenario: all checkboxes selected
+Scenario: all ratings selected
    When I check the following ratings: PG, R, PG-13, NC-17, G
    And I press "ratings_submit"
    Then I should be on the RottenPotatoes home page
    And I should see all of the movies
 
-Scenario: no checkboxes selected
-   When I uncheck the following ratings: PG, R, PG-13, NC-17, G
-   And I press "ratings_submit"
-   Then I should be on the RottenPotatoes home page
-   And I should not see any of the movies
+
 
 
 
