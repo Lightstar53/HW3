@@ -3,7 +3,10 @@
 Given /^I am on the RottenPotatoes home page$/ do
   visit movies_path
  end
-
+ 
+Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
+  assert page.body =~ /#{e1}.*#{e2}/m
+end
 
  When /^I have added a movie with title "(.*?)" and rating "(.*?)"$/ do |title, rating|
   visit new_movie_path
@@ -55,33 +58,48 @@ Given /the following movies have been added to RottenPotatoes:/ do |movies_table
     # The keys will be the table headers and the values will be the row contents.
     # You should arrange to add that movie to the database here.
     # You can add the entries directly to the databasse with ActiveRecord methodsQ
-    if !Movie.find_by_title_and_rating(movie[:title], movie[:rating]) then
       Movie.create!(movie)
   end
- end
-  assert (Movie.count >= movies_table.hashes.count), "Error while DB filling"
 end
 
 When /^I have opted to see movies rated: "(.*?)"$/ do |arg1|
   # HINT: use String#split to split up the rating_list, then
   # iterate over the ratings and check/uncheck the ratings
   # using the appropriate Capybara command(s)
-  rating_list.split(/,( *)/).select{|i| i =~ /\w/}.each do |rating|
-    if uncheck then
-      step %{I uncheck "ratings[#{rating}]"}
-    else
-      step %{I check "ratings[#{rating}]"}
+  rating_list =rating_list.gsub(/[,]/,"")
+  ratings = rating_list.split
+  ratings.each do |r|
+     check("ratings_#{r}")
     end
-  end
 end
 
-
-Then /^I should see only movies rated "(.*?)"$/ do |arg1|
-  assert page.should have_selector("table tr", :count => Movie.count + 1), "Not all movies have seen"
+Then /^I should see only movies rated: "(.*?)"$/ do |selected_rating|
+  selected_rating = selected_rating.gsub(/[,]/,"")
+  rate = selected_rating.split
+  rate.each do |ra|
+    assert page.has_xpath?("//td[text()='#{ra}']")
+ end
 end
 
+Then /^I should see PG and R movies$/ do
+  assert page.has_xpath?("//td[text()='PG']")
+  assert page.has_xpath?("//td[text()='R']")
+end
 Then /^I should see all of the movies$/ do
-  assert page.should have_selector("table tr", :count => 1), "I still see movies"
+assert page.has_css?("table tbody tr", count: 10)
+end
+
+When /I sort the results by (.*)/ do |sort_order|
+  sort_id = sort_order.gsub(/\s/, '_')
+  click_link "#{sort_id}_header"
+end
+
+When /I follow "Movie Title"/ do
+  click_link "title_header"
+end
+
+When /i follow "Release Date"/ do
+  click_link "release_date_header"
 end
 
 
