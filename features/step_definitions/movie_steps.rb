@@ -1,9 +1,9 @@
-# Completed step definitions for basic features: AddMovie, ViewDetails, EditMovie 
+# Completed step definitions for basic features: AddMovie, ViewDetails, EditMovie
 
 Given /^I am on the RottenPotatoes home page$/ do
   visit movies_path
  end
- 
+
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   assert page.body =~ /#{e1}.*#{e2}/m
 end
@@ -15,14 +15,14 @@ end
   click_button 'Save Changes'
  end
 
- Then /^I should see a movie list entry with title "(.*?)" and rating "(.*?)"$/ do |title, rating| 
+ Then /^I should see a movie list entry with title "(.*?)" and rating "(.*?)"$/ do |title, rating|
    result=false
    all("tr").each do |tr|
      if tr.has_content?(title) && tr.has_content?(rating)
        result = true
        break
      end
-   end  
+   end
    assert result
  end
 
@@ -46,7 +46,7 @@ end
  end
 
 
-# New step definitions to be completed for HW3. 
+# New step definitions to be completed for HW3.
 # Note that you may need to add additional step definitions beyond these
 
 
@@ -58,11 +58,11 @@ Given /the following movies have been added to RottenPotatoes:/ do |movies_table
     # The keys will be the table headers and the values will be the row contents.
     # You should arrange to add that movie to the database here.
     # You can add the entries directly to the databasse with ActiveRecord methodsQ
-      Movie.create!(movie)
+    Movie.create!(movie)
   end
 end
 
-When /^I have opted to see movies rated: "(.*?)"$/ do |arg1|
+When /^I have opted to see movies rated: "(.*?)"$/ do |rating_list|
   # HINT: use String#split to split up the rating_list, then
   # iterate over the ratings and check/uncheck the ratings
   # using the appropriate Capybara command(s)
@@ -101,6 +101,3 @@ end
 When /i follow "Release Date"/ do
   click_link "release_date_header"
 end
-
-
-
